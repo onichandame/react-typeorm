@@ -29,10 +29,10 @@ jobs:
         uses: actions/setup-node@master
         with:
           node-version: 14.x
-      - name: Set up dependency
-        run: yarn install --frozen-lockfile
-      - name: Build pages
-        run: yarn build-storybook
+      - name: Build
+        run: yarn && yarn build-storybook
+        env:
+          YARN_ENABLE_IMMUTABLE_INSTALLS: false # allow the creation of yarn.lock
       - name: Publish
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
