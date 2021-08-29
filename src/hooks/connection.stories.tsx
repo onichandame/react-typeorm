@@ -3,8 +3,7 @@ import { FC } from "react";
 
 import { useConnection } from "./connection";
 
-const Root: FC = () => {
-  const name = Math.random().toString(36).substr(3, 5);
+const Root: FC<{ name: string }> = ({ name }) => {
   const conn = useConnection({
     name,
     autoSave: true,
@@ -20,6 +19,9 @@ const Root: FC = () => {
   );
 };
 
-export default { title: `connection/Hook` } as ComponentMeta<typeof Root>;
+export default {
+  title: `Hook/Connection`,
+  args: { name: Math.random().toString(36).substr(3, 5) },
+} as ComponentMeta<typeof Root>;
 
 export const Hook = Root.bind({});

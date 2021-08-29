@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc -p ./tsconfig.build.json",
-    "storybook": "start-storybook --quiet -p 3000",
+    "storybook": "start-storybook -p 3000",
     "build-storybook": "build-storybook"
   },
   "repository": {

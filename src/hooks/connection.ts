@@ -1,4 +1,9 @@
-import { ConnectionOptions, Connection, createConnection } from "typeorm";
+import {
+  getConnection,
+  ConnectionOptions,
+  Connection,
+  createConnection,
+} from "typeorm";
 import { useCallback, useEffect, useState } from "react";
 import localforage from "localforage";
 // prettier-ignore
@@ -22,39 +27,37 @@ const setup = () => {
   }, []);
 };
 
-export const useConnection = (props: Props) => {
-  const [conn, setConn] = useState<Connection | null>(null);
-  setup();
-  useEffect(() => {
-    let active = true;
-    createConnection({ type: `sqljs`, useLocalForage: true, ...props }).then(
-      (conn) => {
-        if (active) setConn(conn);
-      }
-    );
-    return () => {
-      active = false;
-    };
-  }, [props]);
-
-  return conn;
-};
-
 export const useLazyConnection = (props: Props) => {
   const [conn, setConn] = useState<Connection | null>(null);
   setup();
   const connect = useCallback(
     async (props2?: Props) => {
-      setConn(
-        await createConnection({
+      let con: Connection;
+      try {
+        con = getConnection(props.name);
+      } catch (e) {
+        console.debug(e);
+        con = await createConnection({
           type: `sqljs`,
           useLocalForage: true,
           ...props,
           ...props2,
-        })
-      );
+        });
+      }
+      setConn(con);
+      return con;
     },
-    [setConn, props]
+    [props]
   );
   return [conn, connect] as [typeof conn, typeof connect];
+};
+
+export const useConnection = (props: Props) => {
+  setup();
+  const [conn, connect] = useLazyConnection(props);
+  useEffect(() => {
+    connect();
+  }, [connect]);
+
+  return conn;
 };
