@@ -13,7 +13,7 @@ import SQL from "sql.js/dist/sql-asm";
 type Props = Omit<
   Extract<ConnectionOptions, { type: `sqljs` }>,
   "type" | "useLocalForage"
->;
+> & { name: string }; // need name to retrieve connection
 
 let done = false;
 

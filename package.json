@@ -1,6 +1,6 @@
 {
   "name": "@onichandame/react-typeorm",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "description": "react helpers for typeorm",
   "main": "dist/cjs/index",
   "module": "dist/esm/index.js",
