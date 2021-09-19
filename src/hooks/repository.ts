@@ -3,11 +3,20 @@ import { Connection, Repository } from "typeorm";
 
 export const useRepository = <T>(
   connection: Connection | null,
-  entity: { new (): T }
+  entity: { new (): T; name: string }
 ) => {
   const [repo, setRepo] = useState<Repository<T> | null>(null);
   useEffect(() => {
-    if (connection) setRepo(connection.getRepository(entity));
+    if (connection) {
+      try {
+        console.debug(
+          `trying to get repository ${entity.name} on connection ${connection.name}`
+        );
+        setRepo(connection.getRepository(entity));
+      } catch (e) {
+        console.error(e);
+      }
+    }
   }, [connection, entity]);
   return repo;
 };

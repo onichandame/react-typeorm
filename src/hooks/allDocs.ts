@@ -40,10 +40,20 @@ export const useAllDocs = <T>(repo: Repository<T> | null) => {
   }, [repo]);
   useEffect(() => {
     let active = true;
-    if (repo)
-      repo.find().then((v) => {
-        if (active) setDocs(v);
-      });
+    if (repo) {
+      console.debug(`fetching docs from repo ${repo.metadata.name}`);
+      repo
+        .find()
+        .then((v) => {
+          console.log(
+            `fetched ${v.length} docs from repo ${repo.metadata.name}`
+          );
+          if (active) setDocs(v);
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+    }
     return () => {
       active = false;
     };

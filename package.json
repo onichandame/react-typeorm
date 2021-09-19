@@ -1,17 +1,14 @@
 {
   "name": "@onichandame/react-typeorm",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "react helpers for typeorm",
-  "main": "dist/cjs/index",
-  "module": "dist/esm/index.js",
+  "main": "dist/index",
   "files": [
     "dist"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:cjs": "tsc -p ./tsconfig.build-cjs.json",
-    "build:esm": "tsc -p ./tsconfig.build-esm.json",
-    "build": "concurrently 'yarn build:cjs' 'yarn build:esm'",
+    "build": "tsc -p ./tsconfig.build.json",
     "storybook": "start-storybook -p 3000",
     "build-storybook": "build-storybook"
   },

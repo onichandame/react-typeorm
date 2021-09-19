@@ -32,20 +32,30 @@ export const useLazyConnection = (props: Props) => {
   setup();
   const connect = useCallback(
     async (props2?: Props) => {
-      let con: Connection;
       try {
-        con = getConnection(props.name);
+        setConn(getConnection(props.name));
+        console.debug(`connection ${props.name} found`);
       } catch (e) {
-        console.debug(e);
-        con = await createConnection({
+        console.log(e);
+        console.debug(`createConnection called with argument:`, {
           type: `sqljs`,
           useLocalForage: true,
           ...props,
           ...props2,
         });
+        try {
+          setConn(
+            await createConnection({
+              type: `sqljs`,
+              useLocalForage: true,
+              ...props,
+              ...props2,
+            })
+          );
+        } catch (e) {
+          console.error(e);
+        }
       }
-      setConn(con);
-      return con;
     },
     [props]
   );

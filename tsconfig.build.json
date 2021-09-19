@@ -1,4 +1,5 @@
 {
   "extends": "./tsconfig.json",
-  "exclude": ["**/*stories.ts"]
+  "exclude": ["**/*stories.ts"],
+  "compilerOptions": {}
 }
