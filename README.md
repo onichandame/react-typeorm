@@ -1,3 +1,5 @@
+**This lib is not used by the author anymore as typeorm is overworked for frontend environment. Normally localstorage or indexedDB fits better**
+
 # React Typeorm
 
 React hooks components for typeorm in browser with localforage enabled.
